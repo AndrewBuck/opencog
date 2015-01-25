@@ -41,9 +41,11 @@ def csv(csv_file_path):
             #line = line.encode('ascii','xmlcharrefreplace')
             #line = line.replace("\\","").replace("\"","").replace("`","")
             temp = line.split('\t')
+            columns_to_keep = temp[1:6]
+            columns_to_keep.append(temp[9].strip())
             if (temp[2].startswith('/c/en/') and
-             temp[1:6] not in container):
-                container.append(temp[1:6])
+             columns_to_keep not in container):
+                container.append(columns_to_keep)
 
     # This line was presumably here to remove the header line from the file,
     # but the latest version of conceptnet no longer appears to have it.
