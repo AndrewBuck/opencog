@@ -116,7 +116,9 @@ def write_atoms(atomspace, cn_assertion, template_no, link_type=''):
 
 def from_file(atomspace, cn_path, scm_name):
     # lists_of_assertions is a list of list of assertion
+    print "Reading input csv file..."
     lists_of_assertions = reader.csv(cn_path)
+    print "\n\nReading complete, beginning processing..."
     with open(scm_name, 'w') as scm_file:
         for an_assertion in lists_of_assertions:
             if map(an_assertion[0], 2):

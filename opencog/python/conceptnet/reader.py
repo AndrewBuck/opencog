@@ -3,6 +3,7 @@ __author__ = 'Amen Belayneh'
 # This code is used to read the relations from a conceptnet dump, and
 # return a container containing a list of lists of the relations
 
+import sys
 
 def ascii_lines(iterable):
     for line in iterable:
@@ -22,7 +23,20 @@ def csv(csv_file_path):
     #import codecs
     #with codecs.open(csv_file_path, 'r', encoding='utf-8') as stream:
     with open(csv_file_path, 'rb') as stream:
+        # Determine file size to indicate progress reading the file.
+        stream.seek(0, 2)
+        file_size = stream.tell()
+        stream.seek(0)
+        printed_progress = -1
+
         for line in ascii_lines(stream):
+            # Print the file read progress bar.
+            read_progress = int(100 * stream.tell() / float(file_size))
+            if read_progress >= printed_progress + 1:
+                sys.stdout.write(str(read_progress) + "%  ")
+                sys.stdout.flush()
+                printed_progress = read_progress
+
             # convert it to ascii (required for atomspace) and remove \ or " or `
             #line = line.encode('ascii','xmlcharrefreplace')
             #line = line.replace("\\","").replace("\"","").replace("`","")
