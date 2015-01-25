@@ -121,6 +121,10 @@ def from_file(atomspace, cn_path, scm_name):
     print "\n\nReading complete, beginning processing..."
     with open(scm_name, 'w') as scm_file:
         for an_assertion in lists_of_assertions:
+            sentence = an_assertion[5].replace('[', '').replace(']', '').replace('\'', '\\\'')
+            if len(sentence) > 0:
+                scm_file.write("(r2l '" + sentence + "')" + "\n" * 2)
+
             if map(an_assertion[0], 2):
                 temp = write_atoms(atomspace, an_assertion, 2)
                 scm_file.write(temp + '\n' * 2)
